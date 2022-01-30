@@ -1,14 +1,14 @@
 
 ##  Assumptions:
-1.	You have already Linux machine capable of connecting AWS. 
-2.	Linux is RHEL8 
-3.	You are connected to VPN through which you are able to connect to AWS private IP. Else OpenVPN aws server can be configured and then you can connect you AWS instances.
-4.	Podman is used to deploy container as Docker is not supported from RHEL8. Both tools serve same purpose i.e. container management
+1.You have already Linux machine capable of connecting AWS. 
+2.Linux is RHEL8 
+3.You are connected to VPN through which you are able to connect to AWS private IP. Else OpenVPN aws server can be configured and then you can connect you AWS instances.
+4.Podman is used to deploy container as Docker is not supported from RHEL8. Both tools serve same purpose i.e. container management
 
 ## Pre-quisite for the project:
-1.	Active AWS account 
-2.	User in AWS account with Secret and access key and permission to create infrastructure 
-3.	Linux interface to execute aws , terraform and ansible commands
+1.Active AWS account 
+2.User in AWS account with Secret and access key and permission to create infrastructure 
+3.Linux interface to execute aws , terraform and ansible commands
 
 ## Steps:
 ###### 1.	Install aws cli on Linux 

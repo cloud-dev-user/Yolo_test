@@ -11,13 +11,13 @@
 3.Linux interface to execute aws , terraform and ansible commands
 
 ## Steps:
-###### 1.	Install aws cli on Linux 
+###### 1.Install aws cli on Linux 
 ```
 $ curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 $ unzip awscliv2.zip
 $ sudo ./aws/install
 ```
-###### 2.	Install Ansible and terraform    
+###### 2.Install Ansible and terraform    
 ```
 $ pip3 install ansible (   # I am using python3 setup )
 $ sudo yum install -y yum-utils
@@ -25,15 +25,15 @@ $ sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/has
 $ sudo yum -y install terraform
 ```
 
-###### 3.	Configure AWS profile using aws cli 
+###### 3.Configure AWS profile using aws cli 
 ```
 $ aws configure (Provide access key, secret key, region etc.  as required while prompted)
 ```
 
-###### 4.	Install Boto3 library for dynamic inventory 
+###### 4.Install Boto3 library for dynamic inventory 
 $sudo pip3 install boto3
 
-###### 5.	Go to GitHub and clone repository.
+###### 5.Go to GitHub and clone repository.
 ```
 $git clone https://github.com/cloud-dev-user/Yolo_test.git
 $ cd Yolo_test.git 

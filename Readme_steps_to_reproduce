@@ -1,0 +1,43 @@
+
+## Assumptions:
+1.	You have already Linux machine capable of connecting AWS. 
+2.	Linux is RHEL8 
+3.	You are connected to VPN through which you are able to connect to AWS private IP. Else OpenVPN aws server can be configured and then you can connect you AWS instances.
+4.	Podman is used to deploy container as Docker is not supported from RHEL8. Both tools serve same purpose i.e. container management
+
+## Pre-quisite for the project:
+1.	Active AWS account 
+2.	User in AWS account with Secret and access key and permission to create infrastructure 
+3.	Linux interface to execute aws , terraform and ansible commands
+
+## Steps:
+###### 1.	Install aws cli on Linux 
+```
+$ curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+$ unzip awscliv2.zip
+$ sudo ./aws/install
+```
+###### 2.	Install Ansible and terraform    
+```
+$ pip3 install ansible (   # I am using python3 setup )
+$ sudo yum install -y yum-utils
+$ sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+$ sudo yum -y install terraform
+```
+
+###### 3.	Configure AWS profile using aws cli 
+```
+$ aws configure (Provide access key, secret key, region etc.  as required while prompted)
+```
+
+###### 4.	Install Boto3 library for dynamic inventory 
+$sudo pip3 install boto3
+
+###### 5.	Go to GitHub and clone repository.
+$git clone https://github.com/cloud-dev-user/Yolo_test.git
+$ cd Yolo_test.git 
+$git checkout develop
+$ cd terraform 
+$terraform init && terraform apply  (  #provide approval as “ yes” when prompted)
+$cd ../ansible
+$ansible-playbook doker-nginx.yaml  

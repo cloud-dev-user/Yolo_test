@@ -1,5 +1,5 @@
 
-## Assumptions:
+##  Assumptions:
 1.	You have already Linux machine capable of connecting AWS. 
 2.	Linux is RHEL8 
 3.	You are connected to VPN through which you are able to connect to AWS private IP. Else OpenVPN aws server can be configured and then you can connect you AWS instances.
@@ -34,6 +34,7 @@ $ aws configure (Provide access key, secret key, region etc.  as required while 
 $sudo pip3 install boto3
 
 ###### 5.	Go to GitHub and clone repository.
+```
 $git clone https://github.com/cloud-dev-user/Yolo_test.git
 $ cd Yolo_test.git 
 $git checkout develop
@@ -41,3 +42,4 @@ $ cd terraform
 $terraform init && terraform apply  (  #provide approval as “ yes” when prompted)
 $cd ../ansible
 $ansible-playbook doker-nginx.yaml  
+```

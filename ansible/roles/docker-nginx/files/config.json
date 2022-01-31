@@ -1,0 +1,35 @@
+{
+        "agent": {
+                "run_as_user": "root"
+        },
+        "logs": {
+                "logs_collected": {
+                        "files": {
+                                "collect_list": [
+                                        {
+                                                "file_path": "/data/nginx/logs/access.log",
+                                                "log_group_name": "access.log",
+                                                "log_stream_name": "{instance_id}.web.access"
+                                        },
+                                        {
+                                                "file_path": "/data/nginx/logs/error.log",
+                                                "log_group_name": "error.log",
+                                                "log_stream_name": "{instance_id}.web.error"
+                                        }
+                                ]
+                        }
+                }
+        },
+        "metrics": {
+                "metrics_collected": {
+                        "collectd": {
+                                "metrics_aggregation_interval": 60
+                        },
+                        "statsd": {
+                                "metrics_aggregation_interval": 60,
+                                "metrics_collection_interval": 10,
+                                "service_address": ":8125"
+                        }
+                }
+        }
+}

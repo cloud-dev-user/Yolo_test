@@ -1,0 +1,71 @@
+---
+  - name: Check if cloudwatch agent is installed else install
+    shell: |
+            rpm -q amazon-cloudwatch-agent 
+            if [ "$?" = "0" ]; then 
+                echo " cloudwatch agent is already installed"
+            else
+                sudo rpm -U https://s3.amazonaws.com/amazoncloudwatch-agent/amazon_linux/amd64/latest/amazon-cloudwatch-agent.rpm
+            fi
+
+  - name: Update config.json for cloudwatch 
+    copy:
+            src: config.json 
+            dest: /opt/aws/amazon-cloudwatch-agent/bin/config.json
+
+
+  - name: Install podman, docker replacement for RHEL
+    yum: 
+         name: podman
+         state: present
+          
+  - name: Delete httpd container if present 
+    containers.podman.podman_container:
+          name: mydata
+          image: nginx
+          state: absent
+
+  - name: Check mountpoint for docker volume is present 
+    file: 
+       path: "{{ item }}"
+       state: directory 
+       mode: '0777'
+    loop:
+            - "/data/nginx/html"
+            - "/data/nginx/logs"
+            - "/usr/share/collectd/"
+
+  - name: Create require files 
+    file: 
+        path: "{{ item }}"
+        state: touch
+        mode: '0777'
+    loop:
+            - "/usr/share/collectd/types.db"
+            - "/data/nginx/logs/access.log"
+            - "/data/nginx/logs/error.log"
+
+  - name: Update index.html for httpd container 
+    ansible.builtin.template:
+       src: index.html.j2
+       dest: /data/nginx/html/index.html
+       mode: '0777'
+  
+  - name: Create httpd container using inbuilt docker image 
+    containers.podman.podman_container:
+          name: mydata
+          image: nginx
+          volume:
+                  - /data/nginx/html/:/usr/share/nginx/html/:z
+                  - /data/nginx/logs/:/var/log/nginx/:z
+          ports:
+                  - "80:80"
+    register: results
+
+  - name: debug results for container
+    debug: 
+          var: results
+  
+  - name: Restart Cloud watch agent 
+    shell: |
+            sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/opt/aws/amazon-cloudwatch-agent/bin/config.json -s
